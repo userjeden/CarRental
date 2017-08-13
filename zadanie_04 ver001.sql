@@ -23,7 +23,7 @@ FROM worker WHERE surname LIKE '_F%';
 SELECT manufacturer, veh_model, mileage
 FROM vehicle 
 ORDER BY mileage DESC
-LIMIT 2;
+LIMIT 3;
 
 
 # QUERY 4e:
@@ -42,14 +42,18 @@ WHERE po.job = 'manager';
 SELECT cu.id, cu.cname, cu.surname, COUNT(vehicle_id) AS rent_occur
 FROM lease le
 JOIN customer cu ON le.customer_id = cu.id
-GROUP BY le.customer_id;
+GROUP BY le.customer_id
+ORDER BY rent_occur DESC
+LIMIT 5;
 
 
 # QUERY 4h:
-SELECT cu.cname, cu.surname, COUNT(DISTINCT vehicle_id) AS different_cars
+SELECT cu.id, cu.cname, cu.surname, COUNT(DISTINCT vehicle_id) AS different_cars
 FROM lease le
 JOIN customer cu ON le.customer_id = cu.id
-GROUP BY le.customer_id;
+GROUP BY le.customer_id
+ORDER BY different_cars DESC
+LIMIT 5;
 
 
 # QUERY 4i:
@@ -57,7 +61,8 @@ SELECT ve.id, ve.manufacturer, ve.veh_model, COUNT(ve.id) AS times_rented
 FROM lease le 
 JOIN vehicle ve ON le.vehicle_id = ve.id
 GROUP BY ve.id
-ORDER BY times_rented DESC;
+ORDER BY times_rented DESC
+LIMIT 5;
 
 
 # QUERY 4j:
@@ -65,7 +70,8 @@ SELECT cu.cname, cu.surname, SUM(le.lease_value) AS client_turnover
 FROM lease le
 JOIN customer cu ON le.customer_id = cu.id
 GROUP BY le.customer_id
-ORDER BY client_turnover DESC;
+ORDER BY client_turnover DESC
+LIMIT 5;
 
 
 # QUERY 4k:
@@ -88,7 +94,9 @@ SELECT cu.cname, cu.surname, COUNT(le.id) AS returns_diff_place
 FROM lease le 
 JOIN customer cu ON le.customer_id = cu.id
 WHERE le.taken_place_id <> le.return_place_id
-GROUP BY cu.id;
+GROUP BY cu.id
+ORDER BY returns_diff_place DESC
+LIMIT 5;
 
 
 # QUERY 4o:
